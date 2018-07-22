@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,32 +21,34 @@ public class ProductController {
     public String home(Model model) {
         List<Product> products = productRepository.getProducts();
 
-        for (Product product : products) {
-            if (shoppingCart.findByName(product.getName())!=null){
-                
-            }else{
-                shoppingCart.addProduct(product);
-            }
-        }
+//        for (Product product : products) {
+//            if (shoppingCart.findByName(product.getName())!=null){
+//
+//            }else{
+//                shoppingCart.addProduct(product);
+//            }
+//        }
         model.addAttribute("allProducts", products);
+        Product product = products.get(1);
+        model.addAttribute("newProduct", product);
         return "bakery";
     }
 
     @GetMapping("/koszyk/suma")
-    public String sumaKoszyka() {
-        List<Product> cart = shoppingCart.getShoppingCart();
+    public String sumaKoszyka(Model model) {
+        List<Product> cart = productRepository.getProducts();
         double suma=0;
 
-//        model.addAttribute("allProducts", cart);
         for (Product product : cart) {
             suma=suma+product.getPrice();
         }
-        return "Do zapłaty " + suma;
+        model.addAttribute("cart", suma);
+        return "summary";
     }
 
     @PostMapping("/added")
     public String addProduct(Product product) {
-        Product existingProduct = shoppingCart.findByName(product.getName());
+        Product existingProduct = productRepository.findByName(product.getName());
 
         if(existingProduct != null) {
             existingProduct.setNumber(product.getNumber());
@@ -56,12 +59,13 @@ public class ProductController {
     }
 
     @GetMapping("/koszyk")
-    public String Koszyk() {
-        List<Product> cart = shoppingCart.getShoppingCart();
-        String cartDesc="";
-        for (Product product : cart) {
-            cartDesc = cartDesc + product.toString();
-        }
-        return cartDesc;
+    public String Koszyk(Model model) {
+        List<Product> products = productRepository.getProducts();
+//        String cartDesc="";
+//        for (Product product : cart) {
+//            cartDesc = cartDesc + product.toString();
+//        }
+        model.addAttribute("cart", products);
+        return "basket";
     }
 }

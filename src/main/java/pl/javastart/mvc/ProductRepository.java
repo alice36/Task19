@@ -25,4 +25,13 @@ public class ProductRepository {
     public void addProduct(Product product) {
         productsTab.add(product);
     }
+
+    public Product findByName(String name) {
+        for (Product product : productsTab) {
+            if(product.getName().equals(name)) {
+                return product;
+            }
+        }
+        return null;
+    }
 }
