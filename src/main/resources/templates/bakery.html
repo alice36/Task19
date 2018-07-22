@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Piekarnia</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+</head>
+<body>
+    <span>
+        <label Witaj w naszej piekarni!></label>
+        <label Dodaj do koszyka wybrane produkty></label>
+    </span>
+        <div th:each="prod: ${allProducts}">
+            <form action="/added" method="post" th:object="${prod}">
+                <h4 th:text="${prod.name}"></h4>
+                <img th:src="${prod.imageUrl}" src=prod.imageUrl/>
+                <p th:text="'Cena ' + ${prod.price}+ 'zł'"></p>
+
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <input th:field="*{number}" type="number" min =0 class="form-control" id="number">
+                    </div>
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+</body>
+</html>
