@@ -20,9 +20,9 @@
                 <form action="/added" method="post" th:object="${newProduct}">
                     <div class="form-row align-items-center">
                         <div class="col-auto my-1">
-                            <label for="number"></label><input th:field="*{number}" type="number" min =0 class="form-control" id="number">
-                            <label for="name"></label><input th:field="*{name}" type="text" class="form-control" id="name">
-                            <label for="price"></label><input th:field="*{price}" type="text" class="form-control" id="price">
+                            <label for="number"></label><input th:field="*{number}" type="number" min=0 class="form-control" id="number">
+                            <label for="name"></label><input  type="hidden" th:value="${prod.name}" class="form-control" id="name" name="name">
+                            <label for="price"></label><input type="hidden" th:value="${prod.price}" class="form-control" id="price" name="price">
                         </div>
                         <div class="col-auto my-1">
                             <button type="submit" class="btn btn-primary">Dodaj</button>
