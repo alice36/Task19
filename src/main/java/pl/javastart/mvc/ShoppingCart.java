@@ -20,6 +20,7 @@ public class ShoppingCart {
     public void addProduct(Product product) {
         shoppingCart.add(product);
     }
+
     public Product findByName(String name) {
         for (Product product : shoppingCart) {
             if(product.getName().equals(name)) {

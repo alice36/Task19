@@ -6,30 +6,29 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 </head>
-<body>
+<body class="margin col-7">
     <div>
         <p Witaj w naszej piekarni!></p>
         <p Dodaj do koszyka wybrane produkty></p>
     </div>
-    <form action="/added" method="post" th:object="${newProduct}">
         <div th:each="prod: ${allProducts}">
 
                 <h4 th:text="${prod.name}"></h4>
-                <img th:src="${prod.imageUrl}"/>
+                <img th:src="${prod.imageUrl}" height="102" width="102"/>
                 <p th:text="'Cena ' + ${prod.price}+ 'zł'"></p>
 
-
-                <div class="form-row align-items-center">
-                    <div class="col-auto my-1">
-                        <label for="number"></label>
-                        <input th:field="*{number}" type="number" min =0 class="form-control" id="number">
+                <form action="/added" method="post" th:object="${newProduct}">
+                    <div class="form-row align-items-center">
+                        <div class="col-auto my-1">
+                            <label for="number"></label><input th:field="*{number}" type="number" min =0 class="form-control" id="number">
+                            <label for="name"></label><input th:field="*{name}" type="text" class="form-control" id="name">
+                            <label for="price"></label><input th:field="*{price}" type="text" class="form-control" id="price">
+                        </div>
+                        <div class="col-auto my-1">
+                            <button type="submit" class="btn btn-primary">Dodaj</button>
+                        </div>
                     </div>
-                    <div class="col-auto my-1">
-                        <button type="submit" class="btn btn-primary">Dodaj</button>
-                    </div>
-                </div>
-
+                </form>
         </div>
-    </form>
 </body>
 </html>

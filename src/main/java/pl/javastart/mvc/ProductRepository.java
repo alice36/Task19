@@ -14,7 +14,7 @@ public class ProductRepository {
 
         productsTab.add(new Product ("Bułka z ziarnem", 1.5, "/images/ziarno.jpg"));
         productsTab.add(new Product ("Bułka pszenna", 1.2, "/images/zwykla.jpg"));
-        productsTab.add(new Product ("Chleb zwykły", 3.5,"/images/static/chleb.jpg"));
+        productsTab.add(new Product ("Chleb zwykły", 3.5,"/images/chleb.jpg"));
         productsTab.add(new Product ("Chleb orkiszowy", 4.35,"/images/orkisz.jpg"));
     }
 

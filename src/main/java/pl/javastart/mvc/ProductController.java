@@ -13,34 +13,28 @@ public class ProductController {
     private ProductRepository productRepository;
     private ShoppingCart shoppingCart;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ShoppingCart shoppingCart) {
         this.productRepository = productRepository;
+        this.shoppingCart = shoppingCart;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String home(Model model) {
         List<Product> products = productRepository.getProducts();
 
-//        for (Product product : products) {
-//            if (shoppingCart.findByName(product.getName())!=null){
-//
-//            }else{
-//                shoppingCart.addProduct(product);
-//            }
-//        }
         model.addAttribute("allProducts", products);
-        Product product = products.get(1);
+        Product product = new Product();
         model.addAttribute("newProduct", product);
         return "bakery";
     }
 
     @GetMapping("/koszyk/suma")
     public String sumaKoszyka(Model model) {
-        List<Product> cart = productRepository.getProducts();
+        List<Product> cart = shoppingCart.getShoppingCart();
         double suma=0;
 
         for (Product product : cart) {
-            suma=suma+product.getPrice();
+            suma=suma+product.getPrice()*product.getNumber();
         }
         model.addAttribute("cart", suma);
         return "summary";
@@ -48,19 +42,19 @@ public class ProductController {
 
     @PostMapping("/added")
     public String addProduct(Product product) {
-        Product existingProduct = productRepository.findByName(product.getName());
+        Product existingProduct = shoppingCart.findByName(product.getName());
 
         if(existingProduct != null) {
-            existingProduct.setNumber(product.getNumber());
+            existingProduct.setNumber(existingProduct.getNumber()+product.getNumber());
         } else {
-
+            shoppingCart.addProduct(product);
         }
         return "added";
     }
 
     @GetMapping("/koszyk")
     public String Koszyk(Model model) {
-        List<Product> products = productRepository.getProducts();
+        List<Product> products = shoppingCart.getShoppingCart();
 //        String cartDesc="";
 //        for (Product product : cart) {
 //            cartDesc = cartDesc + product.toString();
